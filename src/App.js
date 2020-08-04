@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Offers from "./containers/Offers";
+import Offer from "./containers/Offer";
+import Login from "./containers/Login";
+import Header from "./components/Header";
+import Signup from "./containers/Signup";
+import Publish from "./containers/Publish";
 
 function App() {
+  const [user, setUser] = useState(null);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Header user={user} setUser={setUser} />
+        <Switch>
+          <Route path="/offer/:id/">
+            <Offer />
+          </Route>
+          <Route path="/login">
+            <Login setUser={setUser} />
+          </Route>
+          <Route path="/signup">
+            <Signup setUser={setUser} />
+          </Route>
+          <Route path="/publish">
+            <Publish />
+          </Route>
+
+          <Route exact path="/">
+            <Offers />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
